@@ -6,9 +6,9 @@ using FAT12Viewer;
 
 namespace FAT12Viewer
 {
-    public class FloppyHeaderParser
+    public static class FloppyHeaderParser
     {
-        public FloppyHeader Parse(byte[] floppyData)
+        public static FloppyHeader Parse(byte[] floppyData)
         {
             var header = new FloppyHeader();
 

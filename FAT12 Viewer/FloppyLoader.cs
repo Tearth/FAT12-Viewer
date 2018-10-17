@@ -5,9 +5,9 @@ using System.Text;
 
 namespace FAT12Viewer
 {
-    public class FloppyLoader
+    public static class FloppyLoader
     {
-        public byte[] Load(string path)
+        public static byte[] Load(string path)
         {
             return File.ReadAllBytes(path);
         }
