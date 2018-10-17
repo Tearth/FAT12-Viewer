@@ -11,8 +11,8 @@ namespace FAT12Viewer
         {
             var floppyData = FloppyLoader.Load(args[0]);
             var floppyHeader = FloppyHeaderParser.Parse(floppyData);
-            var firstFatData = FloppyFatLoader.Parse(floppyHeader, floppyData, 0);
-            var secondFatData = FloppyFatLoader.Parse(floppyHeader, floppyData, 1);
+            var firstFatData = FloppyFatParser.Parse(floppyHeader, floppyData, 0);
+            var secondFatData = FloppyFatParser.Parse(floppyHeader, floppyData, 1);
 
             DisplayFloppyHeader(floppyHeader);
             DisplayChains(firstFatData);
