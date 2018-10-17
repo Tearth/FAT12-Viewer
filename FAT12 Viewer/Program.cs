@@ -35,6 +35,16 @@ namespace FAT12Viewer
             Console.WriteLine("Sides count: " + floppyHeader.SidesCount);
             Console.WriteLine("Hidden sectors: " + floppyHeader.HidddenSectors);
             Console.WriteLine("Large amount: " + floppyHeader.LargeAmount);
+
+            Console.WriteLine();
+            Console.WriteLine("Drive number: " + floppyHeader.DriveNumber);
+            Console.WriteLine("Flags in Windows NT: " + floppyHeader.FlagsInWindowsNt);
+            Console.WriteLine("Signature: " + floppyHeader.Signature);
+            Console.WriteLine("Volume ID: " + floppyHeader.VolumeId);
+            Console.WriteLine("Volume label: " + Encoding.ASCII.GetString(floppyHeader.VolumeLabel));
+            Console.WriteLine("System identifier: " + Encoding.ASCII.GetString(floppyHeader.SystemIdentifier));
+            Console.WriteLine("Boot code: " + Encoding.ASCII.GetString(floppyHeader.BootCode));
+            Console.WriteLine("Bootloader signature: " + floppyHeader.BootSignature);
         }
     }
 }

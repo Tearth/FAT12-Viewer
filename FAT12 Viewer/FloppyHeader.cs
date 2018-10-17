@@ -26,5 +26,22 @@ namespace FAT12Viewer
         public ushort SidesCount;
         public uint HidddenSectors;
         public uint LargeAmount;
+
+        // Extended data
+        public byte DriveNumber;
+        public byte FlagsInWindowsNt;
+        public byte Signature;
+        public uint VolumeId;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 11)]
+        public byte[] VolumeLabel;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+        public byte[] SystemIdentifier;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 448)]
+        public byte[] BootCode;
+
+        public ushort BootSignature;
     }
 }
