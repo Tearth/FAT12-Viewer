@@ -49,7 +49,7 @@ namespace FAT12Viewer
 
         private static ushort GetClusterValueWithFullRight(byte firstByte, byte secondByte)
         {
-            return (ushort)(((firstByte & 0xF0) >> 4) | (secondByte << 8));
+            return (ushort)(((firstByte & 0xF0) >> 4) | (secondByte << 4));
         }
     }
 }

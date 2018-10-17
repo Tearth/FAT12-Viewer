@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -14,6 +15,7 @@ namespace FAT12Viewer
             var secondFatData = FloppyFatLoader.Parse(floppyHeader, floppyData, 1);
 
             DisplayFloppyHeader(floppyHeader);
+            DisplayChains(firstFatData);
 
             Console.ReadLine();
         }
@@ -44,6 +46,40 @@ namespace FAT12Viewer
             Console.WriteLine("System identifier: " + Encoding.ASCII.GetString(floppyHeader.SystemIdentifier));
             Console.WriteLine("Boot code: " + Encoding.ASCII.GetString(floppyHeader.BootCode));
             Console.WriteLine("Bootloader signature: " + floppyHeader.BootSignature);
+        }
+
+        private static void DisplayChains(ushort[] fat)
+        {
+            Console.WriteLine();
+            Console.WriteLine("FAT chains:");
+
+            var clonedFat = (ushort[])fat.Clone();
+
+            for (int i = 0; i < fat.Length; i++)
+            {
+                if (clonedFat[i] >= 0x002 && clonedFat[i] <= 0xFEF)
+                {
+                    DisplaySingleChain(clonedFat, i);
+                }
+            }
+        }
+
+        private static void DisplaySingleChain(ushort[] fat, int index)
+        {
+            var chain = new List<ushort>();
+
+            while (index < fat.Length && fat[index] != 0xFFF)
+            {
+                chain.Add(fat[index]);
+
+                var newIndexValue = fat[index];
+                fat[index] = 0;
+                index = newIndexValue;
+
+                index++;
+            }
+
+            Console.WriteLine(string.Join(" -> ", chain));
         }
     }
 }
