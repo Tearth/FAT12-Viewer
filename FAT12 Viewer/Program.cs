@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -13,9 +14,11 @@ namespace FAT12Viewer
             var floppyHeader = FloppyHeaderParser.Parse(floppyData);
             var firstFatData = FloppyFatParser.Parse(floppyHeader, floppyData, 0);
             var secondFatData = FloppyFatParser.Parse(floppyHeader, floppyData, 1);
+            var fatDirectory = FatDirectoryTableParser.Parse(floppyHeader, floppyData);
 
             DisplayFloppyHeader(floppyHeader);
             DisplayChains(firstFatData);
+            DisplayFat(fatDirectory);
 
             Console.ReadLine();
         }
@@ -55,9 +58,9 @@ namespace FAT12Viewer
 
             var clonedFat = (ushort[])fat.Clone();
 
-            for (int i = 0; i < fat.Length; i++)
+            for (int i = 2; i < fat.Length; i++)
             {
-                if (clonedFat[i] >= 0x002 && clonedFat[i] <= 0xFEF)
+                if (clonedFat[i] != 0)
                 {
                     DisplaySingleChain(clonedFat, i);
                 }
@@ -67,6 +70,7 @@ namespace FAT12Viewer
         private static void DisplaySingleChain(ushort[] fat, int index)
         {
             var chain = new List<ushort>();
+            chain.Add((ushort)index);
 
             while (index < fat.Length && fat[index] != 0xFFF)
             {
@@ -75,11 +79,52 @@ namespace FAT12Viewer
                 var newIndexValue = fat[index];
                 fat[index] = 0;
                 index = newIndexValue;
-
-                index++;
             }
 
             Console.WriteLine(string.Join(" -> ", chain));
+        }
+
+        private static void DisplayFat(List<FloppyDirectory> fat)
+        {
+            Console.WriteLine();
+
+            foreach (var directory in fat.Where(p => p.FileSize != 0))
+            {
+                Console.WriteLine();
+
+                Console.WriteLine("Filename: " + Encoding.ASCII.GetString(directory.ShortFileName));
+                Console.WriteLine("Extension: " + Encoding.ASCII.GetString(directory.ShortFileExtension));
+
+                Console.WriteLine("File attributes: " + directory.FileAttributes);
+                Console.WriteLine("User attributes: " + directory.UserAttributes);
+                Console.WriteLine("First character: " + directory.FirstCharacter);
+                Console.WriteLine("Create time: " + GetTime(directory.CreateTime));
+                Console.WriteLine("Create date: " + GetDate(directory.CreateDate));
+                Console.WriteLine("Last access date: " + directory.LastAccessDate);
+                Console.WriteLine("Access rights: " + directory.AccessRights);
+                Console.WriteLine("Last modified time: " + GetTime(directory.LastModifiedTime));
+                Console.WriteLine("Last modified date: " + GetDate(directory.LastModifiedDate));
+                Console.WriteLine("Start cluster: " + directory.StartCluster);
+                Console.WriteLine("File size: " + directory.FileSize);
+            }
+        }
+
+        private static string GetTime(ushort time)
+        {
+            var hour = time >> 10;
+            var minutes = (time & 0b00000_11111_00000) >> 5;
+            var seconds = (time & 0b00000_00000_11111) * 2;
+
+            return hour + ":" + minutes + ":" + seconds;
+        }
+
+        private static string GetDate(ushort date)
+        {
+            var year = 1980 + (date >> 9);
+            var month = (date & 0b00000_01111_00000) >> 5;
+            var day = date & 0b00000_00000_11111;
+
+            return day + "-" + month + "-" + year;
         }
     }
 }
