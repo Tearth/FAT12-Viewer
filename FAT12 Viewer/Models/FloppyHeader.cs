@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
-namespace FAT12Viewer
+namespace FAT12Viewer.Models
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public class FloppyHeader
+    public struct FloppyHeader
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
         public byte[] BootTrap;

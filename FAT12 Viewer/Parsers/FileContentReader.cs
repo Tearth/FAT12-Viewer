@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FAT12Viewer;
+using FAT12Viewer.Models;
 
-namespace FAT12Viewer
+namespace FAT12Viewer.Parsers
 {
     public static class FileContentReader
     {

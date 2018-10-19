@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using FAT12Viewer.Models;
 
-namespace FAT12Viewer
+namespace FAT12Viewer.Parsers
 {
     public static class FatParser
     {
