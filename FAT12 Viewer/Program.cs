@@ -15,11 +15,13 @@ namespace FAT12Viewer
             var firstFatData = FloppyFatParser.Parse(floppyHeader, floppyData, 0);
             var secondFatData = FloppyFatParser.Parse(floppyHeader, floppyData, 1);
             var fatDirectory = FatDirectoryTableParser.Parse(floppyHeader, floppyData);
+            var firstFileContent = FileContentReader.GetContent(floppyHeader, floppyData, new List<ushort> {2, 3, 4, 5});
 
             DisplayFloppyHeader(floppyHeader);
             DisplayChains(firstFatData);
             DisplayFat(fatDirectory);
 
+            Console.WriteLine(firstFileContent);
             Console.ReadLine();
         }
 
