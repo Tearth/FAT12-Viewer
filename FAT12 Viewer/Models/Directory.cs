@@ -6,7 +6,7 @@ using System.Text;
 namespace FAT12Viewer
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct FloppyDirectory
+    public struct Directory
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
         public byte[] ShortFileName;

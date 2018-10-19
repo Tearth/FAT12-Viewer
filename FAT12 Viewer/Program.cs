@@ -12,8 +12,8 @@ namespace FAT12Viewer
         {
             var floppyData = FloppyLoader.Load(args[0]);
             var floppyHeader = FloppyHeaderParser.Parse(floppyData);
-            var firstFatData = FloppyFatParser.Parse(floppyHeader, floppyData, 0);
-            var secondFatData = FloppyFatParser.Parse(floppyHeader, floppyData, 1);
+            var firstFatData = FatParser.Parse(floppyHeader, floppyData, 0);
+            var secondFatData = FatParser.Parse(floppyHeader, floppyData, 1);
             var fatDirectory = FatDirectoryTableParser.Parse(floppyHeader, floppyData);
             var firstFileContent = FileContentReader.GetContent(floppyHeader, floppyData, new List<ushort> {2, 3, 4, 5});
 
@@ -86,7 +86,7 @@ namespace FAT12Viewer
             Console.WriteLine(string.Join(" -> ", chain));
         }
 
-        private static void DisplayFat(List<FloppyDirectory> fat)
+        private static void DisplayFat(List<Directory> fat)
         {
             Console.WriteLine();
 

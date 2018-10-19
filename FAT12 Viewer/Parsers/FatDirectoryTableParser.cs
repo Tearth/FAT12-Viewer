@@ -8,9 +8,9 @@ namespace FAT12Viewer
 {
     public static class FatDirectoryTableParser
     {
-        public static List<FloppyDirectory> Parse(FloppyHeader floppyHeader, byte[] floppyData)
+        public static List<Directory> Parse(FloppyHeader floppyHeader, byte[] floppyData)
         {
-            var directories = new List<FloppyDirectory>();
+            var directories = new List<Directory>();
 
             var sectorsToParse = floppyHeader.DirectoryEntries * 32 / floppyHeader.BytesPerSector;
             var initialOffset = (ushort)(floppyHeader.BytesPerSector + (2 * floppyHeader.BytesPerSector * floppyHeader.SectorsPerFat));
@@ -20,13 +20,13 @@ namespace FAT12Viewer
             {
                 var data = floppyData.Skip(offset).Take(512).ToArray();
 
-                var fat = new FloppyFat();
+                var fat = new Fat();
                 var size = Marshal.SizeOf(fat);
                 var ptr = Marshal.AllocHGlobal(size);
 
                 Marshal.Copy(data, 0, ptr, size);
 
-                fat = (FloppyFat)Marshal.PtrToStructure(ptr, fat.GetType());
+                fat = (Fat)Marshal.PtrToStructure(ptr, fat.GetType());
                 Marshal.FreeHGlobal(ptr);
 
                 directories.AddRange(fat.Directories);

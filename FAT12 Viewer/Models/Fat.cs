@@ -6,9 +6,9 @@ using System.Text;
 namespace FAT12Viewer
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public class FloppyFat
+    public class Fat
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        public FloppyDirectory[] Directories;
+        public Directory[] Directories;
     }
 }

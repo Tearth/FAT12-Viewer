@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FAT12Viewer
 {
-    public static class FloppyFatParser
+    public static class FatParser
     {
         public static ushort[] Parse(FloppyHeader floppyHeader, byte[] floppyData, uint index)
         {
