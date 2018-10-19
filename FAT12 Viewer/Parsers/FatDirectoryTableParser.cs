@@ -12,7 +12,7 @@ namespace FAT12Viewer.Parsers
             var directories = new List<Directory>();
 
             var sectorsToParse = floppyHeader.DirectoryEntries * 32 / floppyHeader.BytesPerSector;
-            var initialOffset = (ushort)(floppyHeader.BytesPerSector + (2 * floppyHeader.BytesPerSector * floppyHeader.SectorsPerFat));
+            var initialOffset = (ushort)(floppyHeader.BytesPerSector + 2 * floppyHeader.BytesPerSector * floppyHeader.SectorsPerFat);
             var offset = initialOffset;
 
             for (var sector = 0; sector < sectorsToParse; sector++)

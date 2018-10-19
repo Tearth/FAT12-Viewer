@@ -7,7 +7,6 @@ namespace FAT12Viewer.Parsers
     {
         public static ushort[] Parse(FloppyHeader floppyHeader, byte[] floppyData, uint index)
         {
-            var totalFatSize = floppyHeader.TotalSectors * floppyHeader.BytesPerSector;
             var initialOffset = GetOffsetForFatIndex(floppyHeader, index);
             var fatSize = GetSizeOfFat(floppyHeader);
 
@@ -33,7 +32,7 @@ namespace FAT12Viewer.Parsers
 
         private static ushort GetOffsetForFatIndex(FloppyHeader floppyHeader, uint index)
         {
-            return (ushort)(floppyHeader.BytesPerSector + (index * floppyHeader.BytesPerSector * floppyHeader.SectorsPerFat));
+            return (ushort)(floppyHeader.BytesPerSector + index * floppyHeader.BytesPerSector * floppyHeader.SectorsPerFat);
         }
 
         private static ushort GetSizeOfFat(FloppyHeader floppyHeader)

@@ -25,9 +25,9 @@ namespace FAT12Viewer.Parsers
         private static ushort GetPhysicalOffset(FloppyHeader floppyHeader, ushort sector)
         {
             var rootDirectory = floppyHeader.DirectoryEntries * 32;
-            var initialOffset = (ushort)(floppyHeader.BytesPerSector + (2 * floppyHeader.BytesPerSector * floppyHeader.SectorsPerFat)) + rootDirectory;
+            var initialOffset = (ushort)(floppyHeader.BytesPerSector + 2 * floppyHeader.BytesPerSector * floppyHeader.SectorsPerFat) + rootDirectory;
 
-            return (ushort)(initialOffset + ((sector - 2) * 512));
+            return (ushort)(initialOffset + (sector - 2) * 512);
         }
     }
 }

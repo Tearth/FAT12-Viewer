@@ -62,7 +62,7 @@ namespace FAT12Viewer
 
             var clonedFat = (ushort[])fat.Clone();
 
-            for (int i = 2; i < fat.Length; i++)
+            for (var i = 2; i < fat.Length; i++)
             {
                 if (clonedFat[i] != 0)
                 {
@@ -73,8 +73,7 @@ namespace FAT12Viewer
 
         private static void DisplaySingleChain(ushort[] fat, int index)
         {
-            var chain = new List<ushort>();
-            chain.Add((ushort)index);
+            var chain = new List<ushort> {(ushort)index};
 
             while (index < fat.Length && fat[index] != 0xFFF)
             {
